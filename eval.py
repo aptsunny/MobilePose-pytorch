@@ -114,7 +114,8 @@ if __name__ == '__main__':
     device = torch.device("cuda" if len(args.gpu)>0 else "cpu")
 
     # user defined parameters
-    num_threads = multiprocessing.cpu_count()
+    # num_threads = multiprocessing.cpu_count()
+    num_threads = 0
     PATH_PREFIX = "./results/{}".format(modelpath.split(".")[0])
 
     input_size = 224

@@ -31,6 +31,7 @@ from dataset_factory import DatasetFactory, ROOT_DIR
 import os
 import multiprocessing
 from tqdm import tqdm
+import numpy as np
 
 
 if __name__ == '__main__':
@@ -60,7 +61,11 @@ if __name__ == '__main__':
 
     print("GPU NUM: %d"%(torch.cuda.device_count()))
     net = CoordRegressionNetwork(n_locations=16, backbone=modeltype).to(device)
+
+    # from torchsummary import summary
+    # print(summary(net, (3, 256, 192)))
     net = torch.nn.DataParallel(net).to(device)
+
 
     learning_rate = args.lr
     batchsize = args.batchsize

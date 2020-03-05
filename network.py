@@ -50,12 +50,12 @@ class CoordRegressionNetwork(nn.Module):
 
     def forward(self, images):
         # 1. Run the images through our Resnet
-        resnet_out = self.resnet(images)
+        resnet_out = self.resnet(images) # (100,3,224,224) -> (100,64,52,52)
         # 2. Use a 1x1 conv to get one unnormalized heatmap per location
-        unnormalized_heatmaps = self.hm_conv(resnet_out)
+        unnormalized_heatmaps = self.hm_conv(resnet_out) #(100,16,52,52)
         # 3. Normalize the heatmaps
-        heatmaps = dsntnn.flat_softmax(unnormalized_heatmaps)
+        heatmaps = dsntnn.flat_softmax(unnormalized_heatmaps) #(100,16,52,52)
         # 4. Calculate the coordinates
-        coords = dsntnn.dsnt(heatmaps)
+        coords = dsntnn.dsnt(heatmaps) #(100,16,2)
 
         return coords, heatmaps
